@@ -253,13 +253,74 @@
     overflow: hidden;
   }
 
-  .bilibili-player {
-    width: 100%;
-    height: 100%;
-    border: none;
+  video#main-video {
+    width: 100%; height: 100%;
+    object-fit: cover;
     display: block;
-    background: #000;
   }
+
+  .video-message {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    text-align: center;
+    background:
+      radial-gradient(circle at center, rgba(0,245,255,0.08), transparent 55%),
+      rgba(0,0,0,0.74);
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    line-height: 1.7;
+  }
+
+  .video-message strong {
+    display: block;
+    color: var(--cyan);
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .url-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 0 4px;
+  }
+
+  .url-row input {
+    flex: 1;
+    background: rgba(0,245,255,0.04);
+    border: 1px solid var(--border-dim);
+    color: var(--text-primary);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .url-row input::placeholder { color: rgba(232,244,248,0.25); }
+  .url-row input:focus { border-color: var(--cyan); }
+
+  .url-btn {
+    padding: 10px 18px;
+    background: rgba(0,245,255,0.08);
+    border: 1px solid var(--border-dim);
+    color: var(--cyan);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .url-btn:hover { background: rgba(0,245,255,0.14); border-color: var(--cyan); }
 
   .stats-bar {
     display: flex;
@@ -379,6 +440,8 @@
     .hero-sub { margin-bottom: 36px; }
     .stats-bar { flex-wrap: wrap; gap: 10px; }
     .footer { flex-direction: column; gap: 8px; text-align: center; }
+    .url-row { flex-direction: column; }
+    .url-btn { width: 100%; text-align: center; }
   }
 </style>
 </head>
@@ -408,32 +471,39 @@
       <div class="corner-bl"></div>
 
       <div class="video-container">
-        <!-- 将下面 src 中的 BV你的号码 替换成你上传到 B 站后得到的 BV 号，例如 BV1xxxxxxxxx。 -->
-        <iframe
-          class="bilibili-player"
-          src="https://player.bilibili.com/player.html?bvid=BV15oG763ERY&page=1&high_quality=1&autoplay=0"
-          title="星际误解局 Bilibili 视频播放器"
-          scrolling="no"
-          frameborder="0"
-          allow="autoplay; fullscreen; picture-in-picture"
-          allowfullscreen="true">
-        </iframe>
+        <!-- 上线部署时，把视频文件放到 assets/intro.mp4；也可以用 ?video=公网视频URL 覆盖。bg 图片只作为网页背景，不再放入视频区域。 -->
+        <video id="main-video" controls autoplay muted playsinline preload="auto">
+          <source src="./assets/intro.mp4" type="video/mp4">
+          <source src="./assets/intro" type="video/mp4">
+          当前浏览器不支持视频播放。
+        </video>
+        <div class="video-message" id="video-message">
+          <div>
+            <strong>未检测到线上视频</strong>
+            请把视频文件命名为 <code>intro.mp4</code> 并放入 <code>assets</code> 文件夹；背景图命名为 <code>bg.png</code> 并放入同一文件夹。
+          </div>
+        </div>
+      </div>
+
+      <div class="url-row">
+        <input type="url" id="video-url-input" placeholder="或粘贴公网视频链接 / paste public video URL…">
+        <button class="url-btn" type="button" id="load-url-btn">加载</button>
       </div>
 
       <div class="stats-bar">
-        <div class="stat-item">视频源 <span>BILIBILI</span></div>
-        <div class="stat-item">播放方式 <span>内嵌</span></div>
-        <div class="stat-item">状态 <span>ONLINE</span></div>
+        <div class="stat-item">分辨率 <span id="res-label">—</span></div>
+        <div class="stat-item">时长 <span id="dur-label">—</span></div>
+        <div class="stat-item">状态 <span id="status-label">待机</span></div>
       </div>
     </div>
   </div>
 
   <div class="cta-wrap">
     <div class="cta-label">准备进入档案了吗？</div>
-    <a class="cta-button" href="https://play.google.com/store" target="_blank" rel="noopener">
+    <a class="cta-button" href="https://routhleck.com/moon-hackthon/" target="_blank" rel="noopener">
       <div class="b-tl"></div><div class="b-tr"></div>
       <div class="b-bl"></div><div class="b-br"></div>
-      <span class="btn-text">进入星际误解局</span>
+      <span class="btn-text">开始游戏</span>
       <span class="btn-arrow">▶</span>
     </a>
   </div>
@@ -446,16 +516,84 @@
 </div>
 
 <script>
+  const DEFAULT_VIDEO = './assets/intro.mp4';
+
+  const video = document.getElementById('main-video');
+  const videoMessage = document.getElementById('video-message');
+  const videoUrlInput = document.getElementById('video-url-input');
+  const loadUrlBtn = document.getElementById('load-url-btn');
+  const resLabel = document.getElementById('res-label');
+  const durLabel = document.getElementById('dur-label');
+  const statusLabel = document.getElementById('status-label');
+
+  function formatDur(s) {
+    if (!Number.isFinite(s)) return '—';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec.toString().padStart(2,'0')}`;
+  }
+
+  function updateStatus(text) {
+    statusLabel.textContent = text;
+  }
+
+  function showVideo(src) {
+    if (!src) return;
+    videoMessage.style.display = 'none';
+    video.src = src;
+    video.load();
+    video.play().catch(() => {
+      updateStatus('已加载，需手动播放');
+    });
+  }
+
+  function loadVideoUrl() {
+    const url = videoUrlInput.value.trim();
+    if (!url) return;
+    showVideo(url);
+  }
+
   function readQueryParam(name) {
     const params = new URLSearchParams(window.location.search);
     return params.get(name);
   }
 
+  const videoFromQuery = readQueryParam('video');
   const bgFromQuery = readQueryParam('bg');
 
   if (bgFromQuery) {
     document.body.style.backgroundImage = `linear-gradient(rgba(2, 4, 8, 0.54), rgba(2, 4, 8, 0.54)), url('${bgFromQuery}')`;
   }
+
+  if (videoFromQuery) {
+    videoUrlInput.value = videoFromQuery;
+    showVideo(videoFromQuery);
+  }
+
+  video.addEventListener('loadedmetadata', () => {
+    resLabel.textContent = `${video.videoWidth}×${video.videoHeight}`;
+    durLabel.textContent = formatDur(video.duration);
+    updateStatus('已加载');
+  });
+
+  video.addEventListener('play',  () => updateStatus('播放中'));
+  video.addEventListener('pause', () => updateStatus('暂停'));
+  video.addEventListener('ended', () => updateStatus('结束'));
+  video.addEventListener('error', () => {
+    if ((video.currentSrc || '').includes(DEFAULT_VIDEO)) {
+      videoMessage.style.display = 'flex';
+      updateStatus('未找到默认视频');
+    } else {
+      videoMessage.style.display = 'flex';
+      videoMessage.querySelector('strong').textContent = '视频链接加载失败';
+      updateStatus('加载失败');
+    }
+  });
+
+  loadUrlBtn.addEventListener('click', loadVideoUrl);
+  videoUrlInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') loadVideoUrl();
+  });
 </script>
 </body>
 </html>
