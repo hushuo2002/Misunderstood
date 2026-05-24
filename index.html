@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENTER THE GAME</title>
+<title>星际误解局</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@
       var(--bg-deep);
     background-image:
       linear-gradient(rgba(2, 4, 8, 0.54), rgba(2, 4, 8, 0.54)),
-      url('assets/bg.png');
+      url('./assets/bg.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -90,16 +90,55 @@
     margin-bottom: 48px;
   }
 
-  .logo {
-    font-family: 'Orbitron', monospace;
-    font-size: clamp(13px, 2.5vw, 17px);
-    font-weight: 700;
-    letter-spacing: 0.3em;
-    color: var(--cyan);
-    text-transform: uppercase;
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
   }
 
-  .logo span { color: var(--text-muted); font-weight: 400; }
+  .logo-mark {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 22px rgba(0, 245, 255, 0.22), inset 0 0 18px rgba(0, 245, 255, 0.08);
+    flex: 0 0 auto;
+  }
+
+  .logo-mark::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(0, 245, 255, 0.7);
+    border-radius: 50%;
+    transform: rotate(-18deg) scaleX(1.35);
+  }
+
+  .logo-mark::after {
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    right: 6px;
+    top: 8px;
+    border-radius: 50%;
+    background: var(--magenta);
+    box-shadow: 0 0 14px rgba(255, 0, 144, 0.85);
+  }
+
+  .logo {
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+    font-size: clamp(15px, 3vw, 21px);
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    text-shadow: 0 0 18px rgba(0,245,255,0.28);
+  }
+
+  .logo span { color: var(--text-primary); font-weight: 700; }
 
   .header-status {
     display: flex;
@@ -395,6 +434,8 @@
 
   @media (max-width: 600px) {
     .site-header { margin-bottom: 32px; }
+    .brand { gap: 8px; }
+    .logo-mark { width: 34px; height: 34px; }
     .hero-title { margin-bottom: 10px; }
     .hero-sub { margin-bottom: 36px; }
     .stats-bar { flex-wrap: wrap; gap: 10px; }
@@ -409,33 +450,37 @@
 <div class="page-wrapper">
 
   <header class="site-header">
-    <div class="logo">NEX<span>//</span>REALM</div>
+    <a class="brand" href="#" aria-label="星际误解局首页">
+      <div class="logo-mark" aria-hidden="true"></div>
+      <div class="logo">星际<span>误解局</span></div>
+    </a>
     <div class="header-status">
       <div class="status-dot"></div>
       LIVE&nbsp;&nbsp;SYS.ONLINE
     </div>
   </header>
 
-  <h1 class="hero-title"><span class="accent">NEXUS</span>&nbsp;PROTOCOL</h1>
-  <p class="hero-sub">战术极限 · 全球竞技 · 无界体验</p>
+  <h1 class="hero-title"><span class="accent">星际</span>误解局</h1>
+  <p class="hero-sub">地球人 · 月球人 · 文化冲击实录</p>
 
   <div class="video-panel">
-    <div class="panel-label">PREVIEW / 游戏预告</div>
+    <div class="panel-label">PREVIEW / 影像档案</div>
 
     <div class="video-frame">
       <div class="corner-br"></div>
       <div class="corner-bl"></div>
 
       <div class="video-container">
-        <!-- 上线部署时，把视频文件放到 assets/intro.mp4；也可以用 ?video=公网视频URL 覆盖 -->
-        <video id="main-video" controls autoplay muted playsinline preload="metadata" poster="assets/bg.png">
-          <source id="video-source" src="assets/intro.mp4" type="video/mp4">
+        <!-- 上线部署时，把视频文件放到 assets/intro.mp4；也可以用 ?video=公网视频URL 覆盖。bg 图片只作为网页背景，不再放入视频区域。 -->
+        <video id="main-video" controls autoplay muted playsinline preload="auto">
+          <source src="./assets/intro.mp4" type="video/mp4">
+          <source src="./assets/intro" type="video/mp4">
           当前浏览器不支持视频播放。
         </video>
         <div class="video-message" id="video-message">
           <div>
             <strong>未检测到线上视频</strong>
-            请把视频文件命名为 <code>intro.mp4</code> 并放入 <code>assets</code> 文件夹，或在下方粘贴一个可公开访问的视频链接。
+            请把视频文件命名为 <code>intro.mp4</code> 并放入 <code>assets</code> 文件夹；背景图命名为 <code>bg.png</code> 并放入同一文件夹。
           </div>
         </div>
       </div>
@@ -454,27 +499,26 @@
   </div>
 
   <div class="cta-wrap">
-    <div class="cta-label">准备好了吗？</div>
+    <div class="cta-label">准备进入档案了吗？</div>
     <a class="cta-button" href="https://play.google.com/store" target="_blank" rel="noopener">
       <div class="b-tl"></div><div class="b-tr"></div>
       <div class="b-bl"></div><div class="b-br"></div>
-      <span class="btn-text">点击进入游戏</span>
+      <span class="btn-text">进入星际误解局</span>
       <span class="btn-arrow">▶</span>
     </a>
   </div>
 
   <footer class="footer">
-    <span>© 2025 NEXREALM STUDIOS</span>
-    <span>SYS BUILD 4.7.2 · ENCRYPTED</span>
+    <span>© 2026 星际误解局</span>
+    <span>CULTURE LOG · INTERSTELLAR</span>
   </footer>
 
 </div>
 
 <script>
-  const DEFAULT_VIDEO = 'assets/intro.mp4';
+  const DEFAULT_VIDEO = './assets/intro.mp4';
 
   const video = document.getElementById('main-video');
-  const videoSource = document.getElementById('video-source');
   const videoMessage = document.getElementById('video-message');
   const videoUrlInput = document.getElementById('video-url-input');
   const loadUrlBtn = document.getElementById('load-url-btn');
@@ -496,7 +540,6 @@
   function showVideo(src) {
     if (!src) return;
     videoMessage.style.display = 'none';
-    videoSource.src = src;
     video.src = src;
     video.load();
     video.play().catch(() => {
