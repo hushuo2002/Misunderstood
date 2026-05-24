@@ -96,6 +96,13 @@
     gap: 12px;
     text-decoration: none;
   }
+  .brand-logo {
+    height: 46px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 0 12px rgba(0, 245, 255, 0.28));
+  }
 
   .logo-mark {
     position: relative;
@@ -388,8 +395,7 @@
 
   <header class="site-header">
     <a class="brand" href="#" aria-label="星际误解局首页">
-      <div class="logo-mark" aria-hidden="true"></div>
-      <div class="logo">星际<span>误解局</span></div>
+      <img class="brand-logo" src="./assets/logo.png" alt="星际误解局">
     </a>
     <div class="header-status">
       <div class="status-dot"></div>
