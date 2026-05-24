@@ -199,6 +199,166 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  .intro-card {
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    margin: -20px auto 34px;
+    padding: 24px 28px;
+    background:
+      linear-gradient(135deg, rgba(0, 245, 255, 0.08), rgba(255, 0, 144, 0.04)),
+      rgba(3, 9, 16, 0.68);
+    border: 1px solid rgba(0, 245, 255, 0.24);
+    box-shadow:
+      0 0 36px rgba(0, 245, 255, 0.08),
+      inset 0 0 28px rgba(0, 245, 255, 0.035);
+    backdrop-filter: blur(8px);
+    animation: fadeUp 0.9s 0.16s ease both;
+    overflow: hidden;
+  }
+
+  .intro-card::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0.85;
+  }
+
+  .intro-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,245,255,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,0.045) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
+    pointer-events: none;
+  }
+
+  .intro-card .corner-tl,
+  .intro-card .corner-tr,
+  .intro-card .corner-bl,
+  .intro-card .corner-br-small {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-color: var(--cyan);
+    border-style: solid;
+    z-index: 2;
+    opacity: 0.9;
+  }
+
+  .intro-card .corner-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .intro-card .corner-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+  .intro-card .corner-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+  .intro-card .corner-br-small { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+  .intro-label {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    color: var(--cyan);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .intro-label::before {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: var(--cyan);
+    box-shadow: 0 0 10px rgba(0,245,255,0.65);
+  }
+
+  .intro-text {
+    position: relative;
+    z-index: 1;
+    color: rgba(255,255,255,0.9);
+    font-size: clamp(15px, 2.4vw, 18px);
+    line-height: 1.9;
+    letter-spacing: 0.06em;
+    text-align: justify;
+  }
+
+  .feature-tags {
+    width: 100%;
+    max-width: 760px;
+    margin: 28px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    animation: fadeUp 0.9s 0.3s ease both;
+  }
+
+  .feature-tag {
+    position: relative;
+    min-height: 104px;
+    padding: 16px 14px 14px;
+    border: 1px solid rgba(0, 245, 255, 0.18);
+    border-radius: 16px;
+    background:
+      radial-gradient(circle at top, rgba(0,245,255,0.08), transparent 52%),
+      rgba(5, 12, 20, 0.62);
+    box-shadow: inset 0 0 18px rgba(0,245,255,0.025);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .feature-tag:nth-child(2) {
+    border-color: rgba(255, 221, 96, 0.28);
+    background:
+      radial-gradient(circle at top, rgba(255,221,96,0.09), transparent 52%),
+      rgba(16, 15, 8, 0.62);
+  }
+
+  .feature-tag:nth-child(3) {
+    border-color: rgba(255, 0, 144, 0.28);
+    background:
+      radial-gradient(circle at top, rgba(255,0,144,0.10), transparent 52%),
+      rgba(16, 8, 22, 0.62);
+  }
+
+  .feature-tag::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent 42%);
+    pointer-events: none;
+  }
+
+  .tag-emoji {
+    display: block;
+    font-size: 26px;
+    line-height: 1;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 10px rgba(0,245,255,0.20));
+  }
+
+  .feature-tag h3 {
+    color: var(--text-primary);
+    font-size: 17px;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+
+  .feature-tag p {
+    color: rgba(232,244,248,0.55);
+    font-size: 12px;
+    line-height: 1.45;
+    letter-spacing: 0.05em;
+  }
+
   .video-panel {
     width: 100%;
     max-width: 480px;
@@ -386,6 +546,25 @@
     .hero-title { margin-bottom: 10px; }
     .hero-sub { margin-bottom: 36px; }
     .stats-bar { flex-wrap: wrap; gap: 10px; }
+    .intro-card {
+      margin: -10px auto 28px;
+      padding: 20px 18px;
+    }
+    .intro-text {
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .feature-tags {
+      grid-template-columns: 1fr;
+      max-width: 360px;
+      gap: 10px;
+    }
+    .feature-tag {
+      min-height: 86px;
+      padding: 13px 12px;
+    }
+    .tag-emoji { font-size: 24px; }
     .footer { flex-direction: column; gap: 8px; text-align: center; }
   }
 </style>
@@ -406,6 +585,15 @@
 
   <h1 class="hero-title"><span class="accent">星际</span>误解局</h1>
   <p class="hero-sub">地球人 · 月球人 · 文化冲击实录</p>
+
+  <section class="intro-card" aria-label="世界观介绍">
+    <span class="corner-tl"></span>
+    <span class="corner-tr"></span>
+    <span class="corner-bl"></span>
+    <span class="corner-br-small"></span>
+    <div class="intro-label">MISSION BRIEF / 世界观简介</div>
+    <p class="intro-text">目前，月球已建立适宜人类居住的基地，月球作为人类通往火星乃至整个太空的中转站，有着巨大文化背景、环境、饮食、表达方式等等差异的星际公民们会经历比国际差异还大的 culture shock，来自两个星球的朋友们需要通过一个轻松、和平的方式建立快速的了解，卡牌游戏应运而生。</p>
+  </section>
 
   <div class="video-panel">
     <div class="panel-label">PREVIEW / 影像档案</div>
@@ -434,6 +622,24 @@
       </div>
     </div>
   </div>
+
+  <section class="feature-tags" aria-label="核心关键词">
+    <article class="feature-tag">
+      <span class="tag-emoji" aria-hidden="true">🤝</span>
+      <h3>交流共赢</h3>
+      <p>在差异中建立理解</p>
+    </article>
+    <article class="feature-tag">
+      <span class="tag-emoji" aria-hidden="true">🕊️</span>
+      <h3>消除矛盾</h3>
+      <p>把误会变成故事</p>
+    </article>
+    <article class="feature-tag">
+      <span class="tag-emoji" aria-hidden="true">🌌</span>
+      <h3>星际交流</h3>
+      <p>连接地球与月球</p>
+    </article>
+  </section>
 
   <div class="cta-wrap">
     <div class="cta-label">准备进入档案了吗？</div>
