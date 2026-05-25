@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/sichaohe/Documents/GitHub/Misunderstood/assets/screenshots/*.png /Users/sichaohe/Documents/GitHub/Misunderstood/assets/screenshots/*.jpg)"
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+id,side,deck,title,scenario,optionA,optionB,optionC,optionD,answerIndex,explanation,deeperMeaning,difficulty,tags,image,imagePrompt
+food-003,moon,food,,,,,,,,,,1,"resource,risk",/assets/cards/food-003.png,"Anime card illustration, lunar habitat food culture scene, no readable text, no watermark."
+earth-food-003,earth,food,,,,,,,,,,1,"social,food",/assets/cards/earth-food-003.png,"Anime card illustration, Earth food sharing scene observed by lunar residents, no readable text, no watermark."
+gesture-003,moon,gesture,,,,,,,,,,1,"communication,body",/assets/cards/gesture-003.png,"Anime card illustration, lunar low-gravity body language misunderstanding, no readable text, no watermark."
+earth-gesture-003,earth,gesture,,,,,,,,,,1,"communication,greeting",/assets/cards/earth-gesture-003.png,"Anime card illustration, Earth greeting gesture misunderstood by lunar visitor, no readable text, no watermark."
+custom-003,moon,custom,月夜静默,月球基地进入长夜周期前，所有人把公共频道静音三分钟。,通讯系统故障,一种共同降噪和心理准备仪式,对地球访客的抗议,正在进行秘密投票,1,长夜周期会改变能源、作息和心理压力，公共频道静音是进入低干扰模式前的集体确认。,在月球，环境周期不是背景，而是会直接改变共同体节奏的压力源。仪式常常同时承担情绪管理和风险管理。,2,"time,risk,ritual",/assets/cards/custom-003.png,"Anime card illustration, lunar habitat entering long night cycle, residents quietly dimming communication panels in a solemn shared ritual, retrofuturistic archive style, no readable text, no watermark."
